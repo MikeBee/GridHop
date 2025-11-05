@@ -1,8 +1,6 @@
-# GridHop - MVP Implementation
+# GridHop
 
 ## 🎮 What's Been Built
-
-I've implemented the **Minimum Viable Prototype** for your Hoplite-inspired tactical roguelite! Here's what's functional:
 
 ### ✅ Core Systems Implemented
 
@@ -68,37 +66,6 @@ I've implemented the **Minimum Viable Prototype** for your Hoplite-inspired tact
 - **Movement:** 1 tile per turn (can be upgraded later)
 - **Attack Range:** Adjacent tiles only (melee)
 
-## 📁 New Files Created
-
-Add these files to your Xcode project:
-
-```
-GridHop/
-├── GridManager.swift    (Hex grid & pathfinding)
-├── Actor.swift          (Base actor class)
-├── Hero.swift           (Player character)
-├── Enemy.swift          (Enemy AI & types)
-├── CombatManager.swift  (Turn management)
-├── HUD.swift            (UI elements)
-└── GameScene.swift      (Updated main scene)
-```
-
-## 🔧 Integration Steps
-
-1. **In Xcode:**
-   - Right-click on `GridHop` folder in Project Navigator
-   - Select "Add Files to GridHop..."
-   - Add all new `.swift` files from the outputs folder
-   - Make sure "Copy items if needed" is checked
-   - Click "Add"
-
-2. **Replace GameScene.swift:**
-   - Delete the old `GameScene.swift`
-   - Add the new one from outputs
-
-3. **Build & Run:**
-   - Press Cmd+B to build
-   - Press Cmd+R to run on simulator or device
 
 ## 🎨 Visual Guide
 
@@ -156,12 +123,6 @@ Based on your spec, here are the next development priorities:
 - [x] Gold awarded on enemy death
 
 ## 💡 Design Notes
-
-### Why Hex Grid?
-- More tactical depth (6 directions vs 4)
-- Better for melee combat positioning
-- Natural fit for push mechanics
-- Easier to visualize sight lines
 
 ### Deterministic AI
 - Enemies always choose the shortest path
@@ -225,18 +186,3 @@ This makes it easy to:
 - **Command Pattern:** Actions resolved through manager
 - **Observer:** HUD updates on game state changes
 - **Factory:** Enemy creation by type
-
-## 🔥 Try This!
-
-1. Run the game
-2. Move hero next to the Brute
-3. Attack it - watch it get pushed back!
-4. See enemies show their intent (⚔️ or arrows)
-5. Use Defend when about to take damage
-6. Defeat all enemies to win!
-
----
-
-**Ready to iterate!** The foundation is solid and ready for you to build upon. Every system is modular and can be extended independently.
-
-What would you like me to add next?
