@@ -101,13 +101,15 @@ class HUD: SKNode {
         border.strokeColor = .white
         border.lineWidth = 2
         border.fillColor = .clear
+        border.isUserInteractionEnabled = false  // Don't intercept touches
         button.addChild(border)
-        
+
         let label = SKLabelNode(text: text)
         label.fontSize = 14
         label.fontName = "AvenirNext-Bold"
         label.fontColor = .white
         label.verticalAlignmentMode = .center
+        label.isUserInteractionEnabled = false  // Don't intercept touches
         button.addChild(label)
         
         return button

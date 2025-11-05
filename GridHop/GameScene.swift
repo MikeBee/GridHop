@@ -211,23 +211,26 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard combatManager.currentPhase == .playerTurn else { return }
         guard let touch = touches.first else { return }
-        
+
         let location = touch.location(in: self)
-        
-        // Check if HUD button was tapped
-        if let tappedNode = atPoint(location) as? SKSpriteNode {
-            if tappedNode.name == "attackButton" {
+
+        // Check if HUD button was tapped (check node and its parent)
+        let tappedNode = atPoint(location)
+        let buttonNode = (tappedNode as? SKSpriteNode) ?? (tappedNode.parent as? SKSpriteNode)
+
+        if let button = buttonNode {
+            if button.name == "attackButton" {
                 handleAttackButton()
                 return
-            } else if tappedNode.name == "defendButton" {
+            } else if button.name == "defendButton" {
                 handleDefendButton()
                 return
-            } else if tappedNode.name == "endTurnButton" {
+            } else if button.name == "endTurnButton" {
                 handleEndTurnButton()
                 return
             }
         }
-        
+
         // Handle grid tap
         if let hexCoord = pixelToHex(location) {
             handleGridTap(at: hexCoord)
@@ -246,6 +249,8 @@ class GameScene: SKScene {
                 clearHighlights()
                 selectedAction = .none
                 hud.updateActionButtons(selected: .none)
+                // End turn after moving
+                combatManager.endPlayerTurn()
             }
             
         case .attack:
@@ -257,6 +262,8 @@ class GameScene: SKScene {
                     clearHighlights()
                     selectedAction = .none
                     hud.updateActionButtons(selected: .none)
+                    // End turn after attacking
+                    combatManager.endPlayerTurn()
                 }
             }
             
