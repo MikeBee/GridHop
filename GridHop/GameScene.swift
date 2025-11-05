@@ -36,7 +36,10 @@ class GameScene: SKScene {
     
     func setupGame() {
         backgroundColor = SKColor(white: 0.15, alpha: 1.0)
-        
+
+        // Remove any default labels from the scene file
+        removeAllChildren()
+
         // Initialize grid manager
         gridManager = GridManager(hexSize: 40.0, gridRadius: 4)
         
@@ -78,8 +81,9 @@ class GameScene: SKScene {
         let path = CGMutablePath()
         let hexSize = gridManager.hexSize
         
+        // For pointy-top hexagons, start at 30 degrees (π/6)
         for i in 0..<6 {
-            let angle = CGFloat(i) * CGFloat.pi / 3.0
+            let angle = CGFloat.pi / 6.0 + CGFloat(i) * CGFloat.pi / 3.0
             let x = hexSize * cos(angle)
             let y = hexSize * sin(angle)
             if i == 0 {
