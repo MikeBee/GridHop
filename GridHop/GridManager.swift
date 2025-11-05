@@ -20,8 +20,16 @@ struct HexCoord: Hashable, Equatable {
     
     // Convert to pixel position (pointy-top hexes)
     func toPixel(hexSize: CGFloat) -> CGPoint {
-        let x = hexSize * (sqrt(3.0) * CGFloat(q) + sqrt(3.0)/2.0 * CGFloat(r))
-        let y = hexSize * (3.0/2.0 * CGFloat(r))
+        let sqrt3 = sqrt(3.0)
+        let qFloat = CGFloat(q)
+        let rFloat = CGFloat(r)
+
+        let xComponent1 = sqrt3 * qFloat
+        let xComponent2 = (sqrt3 / 2.0) * rFloat
+        let x = hexSize * (xComponent1 + xComponent2)
+
+        let y = hexSize * (1.5 * rFloat)
+
         return CGPoint(x: x, y: y)
     }
     
