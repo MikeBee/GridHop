@@ -361,10 +361,10 @@ class GameScene: SKScene {
     @objc func restartGame() {
         // Remove all gesture recognizers
         view?.gestureRecognizers?.forEach { view?.removeGestureRecognizer($0) }
-        
+
         // Reload the scene
         if let scene = GKScene(fileNamed: "GameScene") {
-            if let sceneNode = scene.rootNode as! GameScene? {
+            if let sceneNode = scene.rootNode as? GameScene {
                 sceneNode.scaleMode = .aspectFill
                 view?.presentScene(sceneNode, transition: SKTransition.fade(withDuration: 0.5))
             }
