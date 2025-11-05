@@ -48,6 +48,22 @@ class CombatManager {
     func endPlayerTurn() {
         hero.endTurn()
         scene?.clearHighlights()
+
+        // Check if hero died (shouldn't happen but be safe)
+        if hero.isDead {
+            currentPhase = .gameOver
+            scene?.showGameOver()
+            return
+        }
+
+        // Check if all enemies are dead (player won)
+        if enemies.allSatisfy({ $0.isDead }) {
+            currentPhase = .victory
+            scene?.showVictory()
+            return
+        }
+
+        // Continue to enemy turn
         startEnemyTurn()
     }
     
