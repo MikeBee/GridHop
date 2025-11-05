@@ -9,19 +9,19 @@ import Foundation
 import SpriteKit
 
 class HUD: SKNode {
-    weak var scene: GameScene?
-    
+    weak var gameScene: GameScene?
+
     var heroHPLabel: SKLabelNode!
     var goldLabel: SKLabelNode!
     var turnLabel: SKLabelNode!
-    
+
     var attackButton: SKSpriteNode!
     var defendButton: SKSpriteNode!
     var endTurnButton: SKSpriteNode!
-    
+
     init(scene: GameScene) {
         super.init()
-        self.scene = scene
+        self.gameScene = scene
         self.zPosition = 50
         setupHUD()
     }
@@ -31,8 +31,8 @@ class HUD: SKNode {
     }
     
     func setupHUD() {
-        guard let scene = scene else { return }
-        
+        guard let scene = gameScene else { return }
+
         let screenWidth = scene.size.width
         let screenHeight = scene.size.height
         
@@ -131,16 +131,16 @@ class HUD: SKNode {
     }
     
     func update() {
-        guard let scene = scene else { return }
-        
+        guard let scene = gameScene else { return }
+
         // Update labels
         heroHPLabel.text = "HP: \(scene.hero.hp)/\(scene.hero.maxHp)"
         goldLabel.text = "Gold: \(scene.hero.gold)"
-        
+
         if let combatManager = scene.combatManager {
             turnLabel.text = "Turn: \(combatManager.turnCount)"
         }
-        
+
         // Update hero HP color based on health
         let healthPercent = Float(scene.hero.hp) / Float(scene.hero.maxHp)
         if healthPercent > 0.6 {
