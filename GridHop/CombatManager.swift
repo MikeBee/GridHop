@@ -161,10 +161,10 @@ class CombatManager {
         let defenderPos = defender.sprite.position
         let dx = (defenderPos.x - originalPos.x) * 0.3
         let dy = (defenderPos.y - originalPos.y) * 0.3
-        
+
         let lunge = SKAction.moveBy(x: dx, y: dy, duration: 0.1)
-        let return_back = SKAction.move(to: originalPos, duration: 0.1)
-        attacker.sprite.run(SKAction.sequence([lunge, return_back]))
+        let returnBack = SKAction.move(to: originalPos, duration: 0.1)
+        attacker.sprite.run(SKAction.sequence([lunge, returnBack]))
         
         // Deal damage
         defender.takeDamage(attacker.attackDamage)
