@@ -113,39 +113,61 @@ class CombatManager {
         switch action {
         case .move(let to):
             moveActor(enemy, to: to)
-            
+
         case .attack(let target):
             if target == hero.position {
                 performAttack(attacker: enemy, defender: hero)
+                // Check if hero died from this attack
+                if hero.isDead {
+                    currentPhase = .gameOver
+                    // Delay slightly to show the final damage before game over screen
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        self?.scene?.showGameOver()
+                    }
+                    return
+                }
             }
-            
+
         case .wait:
             break
         }
-        
+
         // Process poison on enemy
         enemy.processPoisonDamage()
-        
+
         // Check if enemy died
         if enemy.isDead {
             handleActorDeath(enemy)
+            // Check if all enemies are dead (player won)
+            if enemies.allSatisfy({ $0.isDead }) {
+                currentPhase = .victory
+                // Delay slightly to show the enemy death before victory screen
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                    self?.scene?.showVictory()
+                }
+            }
         }
     }
     
     private func endEnemyTurn() {
-        // Check game state
+        // Check if game already ended (handled in resolveEnemyAction)
+        if currentPhase == .gameOver || currentPhase == .victory {
+            return
+        }
+
+        // Check game state (in case of poison damage or other effects)
         if hero.isDead {
             currentPhase = .gameOver
             scene?.showGameOver()
             return
         }
-        
+
         if enemies.allSatisfy({ $0.isDead }) {
             currentPhase = .victory
             scene?.showVictory()
             return
         }
-        
+
         // Start next player turn
         startPlayerTurn()
     }
@@ -193,6 +215,17 @@ class CombatManager {
         // Check if defender died
         if defender.isDead {
             handleActorDeath(defender)
+
+            // If hero killed an enemy during player turn, check for victory
+            if attacker.actorType == .hero && currentPhase == .playerTurn {
+                if enemies.allSatisfy({ $0.isDead }) {
+                    currentPhase = .victory
+                    // Delay slightly to show the enemy death animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        self?.scene?.showVictory()
+                    }
+                }
+            }
         }
     }
     
